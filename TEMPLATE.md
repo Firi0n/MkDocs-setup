@@ -10,7 +10,7 @@ This setup uses the [Material for MkDocs](https://squidfunk.github.io/mkdocs-mat
 The content is written in **Markdown**, with support for:
 
 -   :writing_hand: **LaTeX** for mathematical equations
--   :bar_chart: **Mermaid** for diagrams and flowcharts
+-   :bar_chart: **Mermaid and D2** for diagrams and flowcharts
 -   :computer: **Syntax highlighting** for code blocks
 
 ## :sparkles: Enhancements
@@ -25,14 +25,16 @@ This setup includes two key improvements:
 
 -   :page_facing_up: Add new documentation pages by creating `.md` files inside the `docs/` folder.
 
--   :wrench: Modify the `mkdocs.yml` configuration file with your site name and define your pages in the `nav` section:
+-   :wrench: Customize your site by editing the mkdocs.yml configuration file:
+    -   Set your site name.
+    -   Define the navigation structure by listing your pages in the SUMMARY.md file under the nav section.
 
-    ```yaml
-    nav:
-        - Page Name: path/to/page.md
-    ```
+```md
+    # Documentation
+    -   [home](index.md)
+```
 
-    The path should be relative to the `docs/` directory.
+The path should be relative to the `docs/` directory.
 
 ### :open_file_folder: Folder Structure
 
@@ -41,6 +43,7 @@ The `docs/` folder contains the documentation files, organized as follows:
 ```
 docs/
 │-- index.md  # Home page
+|-- SUMMARY.md # Nav
 |-- overrides/
 |   |-- main.html
 |   |-- main.css
@@ -89,6 +92,18 @@ Once set up, GitHub Actions will automatically deploy your site from the `main` 
 Your site will be available at:  
 :point_right: `https://<your-username>.github.io/<repository-name>/`
 
+## :repeat: Template Sync Workflow
+
+This template includes a **manual sync workflow** that automatically pulls the latest updates from the original template
+repository:
+
+1. Go to the **Actions** tab in your repository
+2. Select **":repeat: Sync Template Updates"**
+3. Click **"Run workflow"** → :white_check_mark: All files updated!
+4. **Auto-deploy** triggers → Site live with latest features
+
+**Keeps your repo always up-to-date** with zero manual copying! :rocket:
+
 ## :inbox_tray: Installation
 
 In all cases first steps are:
@@ -103,14 +118,20 @@ cd MKDocs-setup
 
 ### :desktop_computer: Local setup
 
-Before proceeding, ensure you have Python and pip installed on your system. You can check by running:
+Before proceeding, ensure you have Python, pip and d2 installed on your system. You can check by running:
 
 ```sh
 python --version
 pip --version
+d2 --version
 ```
 
-If not installed, refer to the official [Python installation guide](https://www.python.org/downloads/) to set them up.
+If not installed, refer to the official:
+
+-   [Python installation guide](https://www.python.org/downloads/)
+-   [d2 installation guide](https://d2lang.com/tour/install/)
+
+to set them up.
 
 ```sh
 # Install dependencies
@@ -121,31 +142,6 @@ mkdocs serve
 ```
 
 ### :whale: Docker setup
-
-The repository supports two usage modes with Docker:
-
-1. **Using the local directory** (recommended for development)
-2. **Copying the directory into the container** (useful for more isolated environments)
-
-#### :rocket: Running MkDocs with the local directory
-
-This option mounts the working directory into the container, allowing live modifications without needing to rebuild the
-image:
-
-```sh
-# Build the Docker image
-docker build -t mkdocs-site .
-
-# Run the container
-docker run -p 8000:8000 -v $(pwd):/app mkdocs-site
-```
-
-If on Windows, use `{}` instead of `()` for `pwd`.
-
-#### :package: Running MkDocs by copying files into the container
-
-If you prefer a more isolated environment, you can copy the files into the container. To do this, locate the
-corresponding `COPY` instruction in the Dockerfile, remove the comment symbol (`#`), and then:
 
 ```sh
 # Build the Docker image

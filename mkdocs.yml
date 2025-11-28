@@ -17,6 +17,12 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 
+plugins:
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - d2:
+      cache: false # Disable caching for container
+
 # Markdown extensions
 markdown_extensions:
   - toc:
@@ -38,8 +44,3 @@ extra_javascript:
 
 extra_css:
   - overrides/main.css
-
-# Site navigation
-nav:
-  - Home: index.md
-  # Add your pages
